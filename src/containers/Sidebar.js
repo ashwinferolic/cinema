@@ -16,6 +16,7 @@ const WrapperStickyBox = styled(StickyBox)`
   padding: 1.5rem 2rem;
   background-color: ${(props) => props.theme.colors.lighter};
   box-shadow: 0 2px 40px var(--shadow-color);
+  z-index: 999;
 `;
 
 const Hamburger = styled.div`
