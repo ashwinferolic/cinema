@@ -5,6 +5,7 @@ import { getMoviesDiscover, setSelectedMenu, clearMovies } from "../actions";
 import styled from "styled-components";
 import { animateScroll as scroll } from "react-scroll";
 import MoviesList from "../components/MoviesList";
+import Header from "../components/Header";
 
 const Wrapper = styled.div`
   display: flex;
@@ -39,6 +40,7 @@ const Discover = () => {
 
   return (
     <Wrapper>
+      {!config.loading && <Header title={config.selected} subtitle="movies" />}
       {!config.loading && (
         <MoviesList movies={movies} baseUrl={secure_base_url} />
       )}

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import MovieItem from "./MovieItem";
+import Pagination from "./Pagination";
 
 const MoviesWrapper = styled.div`
   display: grid;
@@ -33,6 +34,7 @@ const MoviesList = ({ movies, baseUrl }) => {
           <MovieItem key={movie.id} movie={movie} baseUrl={baseUrl} />
         ))}
       </MoviesWrapper>
+      <Pagination movies={movies} />
     </>
   );
 };
