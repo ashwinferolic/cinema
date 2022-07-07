@@ -5,7 +5,7 @@ import { init } from "../actions";
 import Sidebar from "./Sidebar";
 
 import Discover from "./Discover";
-import Genre from "./Genre";
+import Home from "./Home";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -18,8 +18,8 @@ const App = () => {
     <BrowserRouter>
       <Sidebar />
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/discover/:name" element={<Discover />} />
-        <Route path="/genres/:name" element={<Genre />} />
       </Routes>
     </BrowserRouter>
   );

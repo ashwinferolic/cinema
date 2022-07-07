@@ -6,6 +6,7 @@ import StickyBox from "react-sticky-box";
 import { slide as Menu } from "react-burger-menu";
 import slidestyle from "../utils/slidestyle";
 import tmdbLogoGreen from "../svg/tmdbgreen.svg";
+import MenuItem from "../components/MenuItem";
 
 const WrapperStickyBox = styled(StickyBox)`
   width: 100%;
@@ -58,8 +59,6 @@ const LinkWrap = styled(Link)`
   display: block;
   outline: none;
   margin-bottom: 0.5rem;
-  /* Todo */
-  color: #fff;
 `;
 
 const StyledCoffee = styled.a`
@@ -157,7 +156,10 @@ const renderStatic = (categories, selected, setisOpened) => {
       key={i}
       onClick={setisOpened ? () => setisOpened(false) : null}
     >
-      {category}
+      <MenuItem
+        title={category}
+        selected={selected === category ? true : false}
+      />
     </LinkWrap>
   ));
 };
@@ -169,7 +171,10 @@ const renderGenres = (genres, selected, setisOpened) => {
       key={genre.id}
       onClick={setisOpened ? () => setisOpened(false) : null}
     >
-      {genre.name}
+      <MenuItem
+        title={genre.name}
+        selected={selected === genre.name ? true : false}
+      />
     </LinkWrap>
   ));
 };
