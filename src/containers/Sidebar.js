@@ -7,6 +7,7 @@ import { slide as Menu } from "react-burger-menu";
 import slidestyle from "../utils/slidestyle";
 import tmdbLogoGreen from "../svg/tmdbgreen.svg";
 import MenuItem from "../components/MenuItem";
+import SearchBar from "../components/SearchBar";
 
 const WrapperStickyBox = styled(StickyBox)`
   width: 100%;
@@ -125,6 +126,7 @@ const Sidebar = () => {
           <Bar />
           <Bar />
         </Hamburger>
+        <SearchBar />
       </WrapperStickyBox>
       <Menu isOpen={isOpened} onStateChange={isMenuOpen} styles={slidestyle}>
         <Heading> Discover </Heading>

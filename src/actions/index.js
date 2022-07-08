@@ -67,6 +67,65 @@ export const setSelectedMenu = (name) => async (dispatch, getState) => {
   }
 };
 
+export const getMoviesGenre = (name, page) => async (dispatch, getState) => {
+  const { genres, selected } = getState().config;
+  if (!selected) return;
+
+  try {
+    dispatch({ type: TYPES.FETCH_MOVIES_LOADING });
+    const genreId = genres
+      .filter((el) => el.name === name)
+      .map((el) => el.id)
+      .join("");
+
+    const res = await tmdbAPI.get("/discover/movie", {
+      params: {
+        with_genres: genreId,
+        page,
+      },
+    });
+
+    await dispatch({
+      type: TYPES.FETCH_MOVIES_GENRE,
+      payload: res.data,
+    });
+
+    dispatch({ type: TYPES.FETCH_MOVIES_FINISHED });
+  } catch (err) {
+    dispatch({
+      type: TYPES.INSERT_ERROR,
+      payload: err.response,
+    });
+  }
+};
+
+export const getMoviesSearch = (query, page) => async (dispatch) => {
+  try {
+    dispatch({ type: TYPES.FETCH_MOVIES_LOADING });
+
+    const res = await tmdbAPI.get("/search/movie", {
+      params: {
+        query,
+        page,
+      },
+    });
+
+    await dispatch({
+      type: TYPES.FETCH_MOVIES_SEARCH,
+      payload: res.data,
+    });
+
+    dispatch({
+      type: TYPES.FETCH_MOVIES_FINISHED,
+    });
+  } catch (err) {
+    dispatch({
+      type: TYPES.INSERT_ERROR,
+      payload: err.response,
+    });
+  }
+};
+
 export const clearMovies = () => {
   return {
     type: TYPES.FETCH_MOVIES_LOADING,

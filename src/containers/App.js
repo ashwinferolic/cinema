@@ -6,6 +6,8 @@ import Sidebar from "./Sidebar";
 import styled from "styled-components";
 import Discover from "./Discover";
 import Home from "./Home";
+import Genre from "./Genre";
+import Search from "./Search";
 
 const Wrapper = styled.div`
   display: flex;
@@ -49,6 +51,8 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/discover/:name" element={<Discover />} />
+            <Route path="/genres/:name" element={<Genre />} />
+            <Route path="/search/:query" element={<Search />} />
           </Routes>
         </ContentWrapper>
       </Wrapper>
