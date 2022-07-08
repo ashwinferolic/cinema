@@ -126,8 +126,40 @@ export const getMoviesSearch = (query, page) => async (dispatch) => {
   }
 };
 
+export const getMovie = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: TYPES.FETCH_MOVIE_LOADING });
+
+    const res = await tmdbAPI.get(`/movie/${id}`, {
+      params: {
+        append_to_response: "videos",
+      },
+    });
+
+    await dispatch({
+      type: TYPES.FETCH_MOVIE,
+      payload: res.data,
+    });
+
+    dispatch({
+      type: TYPES.FETCH_MOVIE_FINISHED,
+    });
+  } catch (err) {
+    dispatch({
+      type: TYPES.INSERT_ERROR,
+      payload: err.response,
+    });
+  }
+};
+
 export const clearMovies = () => {
   return {
     type: TYPES.FETCH_MOVIES_LOADING,
+  };
+};
+
+export const clearMovie = () => {
+  return {
+    type: TYPES.FETCH_MOVIE_LOADING,
   };
 };
