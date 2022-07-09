@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { animateScroll as scroll } from "react-scroll";
 import MoviesList from "../components/MoviesList";
 import Header from "../components/Header";
+import { Helmet } from "react-helmet";
 
 const Wrapper = styled.div`
   display: flex;
@@ -40,6 +41,9 @@ const Discover = () => {
 
   return (
     <Wrapper>
+      <Helmet>
+        <title> {`${config.selected} Movies`} </title>
+      </Helmet>
       {!config.loading && <Header title={config.selected} subtitle="movies" />}
       {!config.loading && (
         <MoviesList movies={movies} baseUrl={secure_base_url} />

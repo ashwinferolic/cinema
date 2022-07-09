@@ -2,12 +2,17 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useParams, Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getMovie, clearMovie } from "../actions";
+import {
+  getMovie,
+  clearMovie,
+  getRecommendations,
+  clearRecommendations,
+} from "../actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDotCircle, faLink, faPlay } from "@fortawesome/free-solid-svg-icons";
 import { faImdb } from "@fortawesome/free-brands-svg-icons";
 import LazyLoad from "react-lazyload";
-import { animateScroll as scroll } from "react-scroll";
+import { animateScroll as scroll, Element } from "react-scroll";
 
 import Header from "../components/Header";
 import Rating from "../components/Rating";
@@ -16,6 +21,7 @@ import NothingSvg from "../svg/nothing.svg";
 import Loading from "../components/Loading";
 import NotFound from "../components/NotFound";
 import MoviesList from "../components/MoviesList";
+import { Helmet } from "react-helmet";
 
 const Wrapper = styled.div`
   display: flex;
@@ -235,9 +241,10 @@ const Movie = () => {
   const movie = useSelector((state) => state.movie);
   const config = useSelector((state) => state.config);
   const { secure_base_url } = config.loading ? "" : config.base.images;
-
   const search = useLocation().search;
   const page = new URLSearchParams(search).get("page");
+
+  const recommended = useSelector((state) => state.recommended);
 
   useEffect(() => {
     scroll.scrollToTop({
@@ -245,14 +252,19 @@ const Movie = () => {
       delay: 500,
     });
     dispatch(getMovie(id));
+    dispatch(getRecommendations(id), page);
     return () => {
       clearMovie();
+      clearRecommendations();
     };
-  }, [dispatch, id]);
+  }, [dispatch, id, page]);
   if (movie.loading) return <p> Loading... </p>;
 
   return (
     <Wrapper>
+      <Helmet>
+        <title> {`${movie.title}`} </title>
+      </Helmet>
       <LazyLoad height={500}>
         <MovieWrapper>
           {!loaded ? (
@@ -309,6 +321,8 @@ const Movie = () => {
           </MovieDetails>
         </MovieWrapper>
       </LazyLoad>
+      <Header title="Recommended" subtitle="movies" />
+      {renderRecommended(recommended, secure_base_url)}
     </Wrapper>
   );
 };
@@ -386,6 +400,25 @@ function renderTrailer(videos) {
       <Button title="trailer" icon={faPlay} />
     </AWrapper>
   );
+}
+
+function renderRecommended(recommended, base_url) {
+  if (recommended.loading) {
+    return <p> Loading... </p>;
+  } else if (recommended.total_results === 0) {
+    return (
+      <NotFound
+        title="Sorry!"
+        subtitle={`There are no recommended movies...`}
+      />
+    );
+  } else {
+    return (
+      <Element name="scroll-to-element">
+        <MoviesList movies={recommended} baseUrl={base_url} />;
+      </Element>
+    );
+  }
 }
 
 export default Movie;

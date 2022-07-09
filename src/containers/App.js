@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { init } from "../actions";
 import Sidebar from "./Sidebar";
 import styled from "styled-components";
 import Discover from "./Discover";
-import Home from "./Home";
 import Genre from "./Genre";
 import Search from "./Search";
 import Movie from "./Movie";
@@ -50,7 +49,14 @@ const App = () => {
       <Wrapper>
         <ContentWrapper>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route
+              path="/cinema"
+              element={<Navigate replace to="/discover/popular" />}
+            />
+            <Route
+              path="/"
+              element={<Navigate replace to="/discover/popular" />}
+            />
             <Route path="/discover/:name" element={<Discover />} />
             <Route path="/genres/:name" element={<Genre />} />
             <Route path="/search/:query" element={<Search />} />

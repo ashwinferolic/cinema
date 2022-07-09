@@ -7,6 +7,7 @@ import styled from "styled-components";
 import MoviesList from "../components/MoviesList";
 import NotFound from "../components/NotFound";
 import Header from "../components/Header";
+import { Helmet } from "react-helmet";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -45,6 +46,9 @@ const Search = () => {
 
   return (
     <Wrapper>
+      <Helmet>
+        <title> {`${query} - Search results`} </title>
+      </Helmet>
       <Header title={query} subtitle="search results" />
       <MoviesList movies={movies} baseUrl={secure_base_url} />
     </Wrapper>
