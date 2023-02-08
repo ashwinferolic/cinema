@@ -11,6 +11,8 @@ import { useDispatch } from 'react-redux';
 import { init } from './redux/actions';
 import Sidebar from './components/Sidebar';
 import Genre from './pages/Genre';
+import Search from './pages/Search';
+import Movie from './pages/Movie';
 
 const Wrapper = styled.div`
   display: flex;
@@ -54,11 +56,17 @@ const App = () => {
         <ContentWrapper>
           <Routes>
             <Route
+              path="/cinema"
+              element={<Navigate replace to="/discover/popular" />}
+            />
+            <Route
               path="/"
               element={<Navigate replace to="/discover/popular" />}
             />
             <Route path="/discover/:name" element={<Discover />} />
             <Route path="/genres/:name" element={<Genre />} />
+            <Route path="/search/:query" element={<Search />} />
+            <Route path="/movie/:id" element={<Movie />} />
           </Routes>
         </ContentWrapper>
       </Wrapper>

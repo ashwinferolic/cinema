@@ -6,8 +6,8 @@ import StickyBox from 'react-sticky-box';
 import { slide as Menu } from 'react-burger-menu';
 import slidestyle from '../utils/slidestyle';
 import tmdbLogoGreen from '../svg/tmdbgreen.svg';
-import MenuItem from './MenuItem';
-import SearchBar from './SearchBar';
+import MenuItem from '../components/MenuItem';
+import SearchBar from '../components/SearchBar';
 
 const WrapperStickyBox = styled(StickyBox)`
   width: 100%;
@@ -75,7 +75,7 @@ const StyledCoffee = styled.a`
   border-radius: 3px;
   font-family: 'Poppins', sans-serif;
   letter-spacing: 0.6px;
-  box-shadow: 0px 1px 2px var(--shadow-color)
+  box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5);
   margin: 2rem auto;
   transition: 0.3s all linear;
 
